@@ -6,6 +6,8 @@ import datetime
 from tabulate import tabulate
 
 def get_system_info():
+    """Collect all required Linux system information"""
+
     info = []
     
     # 1. Hostname
@@ -16,12 +18,15 @@ def get_system_info():
     
     # 3. CPU Information
     cpu_count = psutil.cpu_count()
-    cpu_percent = psutil.cpu_percent(interval=1)  # interval=1 gives accurate reading
+    cpu_freq = psutil.cpu_freq()
+    cpu_percent = psutil.cpu_percent(interval=1)  
+    cpu_info = f"{cpu_count} cores, {cpu_freq.current:.0f} MHz, {cpu_percent}% usage"
     info.append(["CPU", f"{cpu_count} cores, {cpu_percent}% usage"])
     
     # 4. Memory Usage
     mem = psutil.virtual_memory()
-    info.append(["Memory", f"{mem.used / 1e9:.2f} GB / {mem.total / 1e9:.2f} GB ({mem.percent}%)"])
+    mem_info = f"{mem.used / (1024**3):.2f} GB / {mem.total / (1024**3):.2f} GB ({mem.percent}%)"
+    info.append(["Memory", mem_info])
     
     # 5. Disk Usage
     disk = psutil.disk_usage('/')
