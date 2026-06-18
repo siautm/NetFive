@@ -61,3 +61,4 @@ if __name__ == "__main__":
     print("="*55)
     print(tabulate(info, headers=["METRIC", "VALUE"], tablefmt="grid"))
     print("="*55)
+    
