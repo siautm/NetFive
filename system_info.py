@@ -30,7 +30,8 @@ def get_system_info():
     
     # 5. Disk Usage
     disk = psutil.disk_usage('/')
-    info.append(["Disk", f"{disk.used / 1e9:.2f} GB / {disk.total / 1e9:.2f} GB ({disk.percent}%)"])
+    disk_info = f"{disk.used / (1024**3):.2f} GB / {disk.total / (1024**3):.2f} GB ({disk.percent}%)"
+    info.append(["Disk Usage", disk_info])
     
     # 6. Logged-in Users - FIXED to handle empty output
     users_output = os.popen('who').read().strip()
@@ -42,7 +43,7 @@ def get_system_info():
     else:
         info.append(["Logged-in Users", "0 users"])
     
-    # 7. Top 5 Processes by CPU - FIXED error handling
+    # 7. Top 5 Processes by CPU
     processes = []
     for proc in psutil.process_iter(['name', 'cpu_percent']):
         try:
@@ -59,10 +60,45 @@ def get_system_info():
     
     return info
 
-if __name__ == "__main__":
-    info = get_system_info()
-    print("\n" + "="*55)
-    print("     LINUX SYSTEM INFORMATION REPORT")
-    print("="*55)
+
+def display_info(info):
+    """Display system information in a formatted table"""
+    print("\n" + "="*65)
+    print("          LINUX SYSTEM INFORMATION REPORT")
+    print("="*65)
     print(tabulate(info, headers=["METRIC", "VALUE"], tablefmt="grid"))
-    print("="*55)
+    print("="*65 + "\n")
+
+def save_to_file(info):
+    """Save system information to a log file with timestamp"""
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"system_info_{timestamp}.txt"
+    
+    try:
+        with open(filename, 'w') as f:
+            f.write("="*65 + "\n")
+            f.write("          LINUX SYSTEM INFORMATION REPORT\n")
+            f.write("="*65 + "\n")
+            for metric, value in info:
+                f.write(f"{metric:20} : {value}\n")
+            f.write("="*65 + "\n")
+        print(f"✅ Report saved to: {filename}")
+        return filename
+    except Exception as e:
+        print(f"❌ Could not save report: {e}")
+        return None
+
+def main():
+    """Main function with error handling"""
+    try:
+        print("📊 Collecting system information...")
+        info = get_system_info()
+        display_info(info)
+        save_to_file(info)
+        print("✅ Script completed successfully!")
+    except Exception as e:
+        print(f"❌ Error collecting system information: {e}")
+        print("💡 Make sure you have psutil installed: pip install psutil tabulate")   
+
+if __name__ == "__main__":
+    main()
