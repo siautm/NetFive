@@ -1,0 +1,7 @@
+# Create a user account
+- name: Configure user account
+  cisco.ios.ios_user:
+    name: testuser
+    configured_password: userpwd
+    privilege: 15
+    state: present
