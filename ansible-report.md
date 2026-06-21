@@ -33,7 +33,6 @@ The inventory file defines:
 
 No Ansible playbook or automation tasks have been implemented yet.
 
----
 
 # 3. Requirement Mapping
 
