@@ -1,0 +1,8 @@
+# Configure interface description
+- name: Configure interface description
+  cisco.ios.ios_interfaces:
+    config:
+      - name: GigabitEthernet0/1      # Target interface
+        description: "Configured by Ansible Automation"
+        enabled: true     # No shutdown
+    state: merged     # Merge with existing configuration
