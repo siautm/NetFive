@@ -1,0 +1,8 @@
+- name: Ansible Automation
+  hosts: routers  # Uses the group from Inventory
+  gather_facts: no
+
+  tasks:
+    - import_tasks: user_config.yml
+    - import_tasks: banner_config.yml
+    - import_tasks: interface_config.yml
