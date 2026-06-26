@@ -67,13 +67,20 @@ The implementation includes the following files:
 
 # 5. Pending Items
 
-No pending items left.
+Final integration testing with the project Docker environment is pending.
+The current validation was performed using the Cisco DevNet Always-On Sandbox (Cat8kv) as a temporary testing platform.
+Once the Docker-based network device environment is fully deployed by the Docker Integration module, additional end-to-end testing will be conducted to verify compatibility and functionality within the final project architecture.
+Test results and documentation will be updated after the integrated Docker environment becomes available.
 
 ---
 
 # 6. Tester Remarks
 
-All four automation tasks have been successfully implemented and verified on a live Cisco Catalyst 8000 device via the Cisco DevNet Always-On Sandbox. All configurations were confirmed directly on the router using CLI verification commands.
+The Ansible automation tasks have been successfully implemented and preliminarily validated using a Cisco Catalyst 8000 (Cat8kv) device provided by the Cisco DevNet Always-On Sandbox.
+
+The sandbox environment was used as a temporary testing platform to verify playbook functionality, connectivity, and configuration deployment. All implemented tasks, including user account creation, banner configuration, and interface description configuration, executed successfully during testing.
+
+Final validation within the project's Docker-based environment has not yet been completed and remains subject to the availability of the integrated network device infrastructure. Additional testing will be performed after the Docker Integration module is finalized.
 
 ```
 
