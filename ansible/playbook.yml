@@ -1,8 +1,14 @@
+# Main playbook for Ansible automation tasks
 - name: Ansible Automation
   hosts: routers  # Uses the group from Inventory
   gather_facts: no
 
   tasks:
+    # Configure user account
     - import_tasks: user_config.yml
+
+    # Configure login banner
     - import_tasks: banner_config.yml
+    
+    # Configure interface description
     - import_tasks: interface_config.yml
