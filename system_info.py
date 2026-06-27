@@ -21,7 +21,7 @@ def get_system_info():
     cpu_freq = psutil.cpu_freq()
     cpu_percent = psutil.cpu_percent(interval=1)  
     cpu_info = f"{cpu_count} cores, {cpu_freq.current:.0f} MHz, {cpu_percent}% usage"
-    info.append(["CPU", f"{cpu_count} cores, {cpu_percent}% usage"])
+    info.append(["CPU", f"{cpu_count} cores, {cpu_freq.current:.0f} MHz, {cpu_percent}% usage"])
     
     # 4. Memory Usage
     mem = psutil.virtual_memory()
