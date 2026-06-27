@@ -111,11 +111,11 @@ project/
 
 ├── netconf/
 
-├── monitor/
+├── docs/
 
 ├── docker/
 
-├── tests/
+├── system-script/
 
 └── README.md
 
