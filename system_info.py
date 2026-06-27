@@ -67,6 +67,8 @@ def display_info(info):
     print("          LINUX SYSTEM INFORMATION REPORT")
     print("="*65)
     print(tabulate(info, headers=["METRIC", "VALUE"], tablefmt="grid"))
+    print("="*65)
+    print("          END OF REPORT")
     print("="*65 + "\n")
 
 def save_to_file(info):
