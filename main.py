@@ -1,31 +1,13 @@
-from ncclient import manager
+import os
+import sys
+import importlib.util
 
-
-device_config = {
-    "host": "192.168.1.1",
-    "port": 830,
-    "username": "admin",
-    "password": "password",
-    "hostkey_verify": False
-}
-
-def get_device_info():
-    """Retrieves device configuration using NETCONF."""
-    try:
-        with manager.connect(**device_config) as m:
-
-            netconf_filter = """
-            <filter>
-                <system xmlns="urn:ietf:params:xml:ns:yang:ietf-system">
-                </system>
-            </filter>
-            """
-            response = m.get_config(source='running', filter=netconf_filter)
-            print("Device Configuration retrieved successfully:")
-            print(response.xml)
-            
-    except Exception as e:
-        print(f"Error connecting to device: {e}")
+# Load netconf/main.py dynamically to avoid circular import namespace issues with "main"
+netconf_main_path = os.path.join(os.path.dirname(__file__), 'netconf', 'main.py')
+spec = importlib.util.spec_from_file_location("netconf_main", netconf_main_path)
+netconf_main = importlib.util.module_from_spec(spec)
+sys.modules["netconf_main"] = netconf_main
+spec.loader.exec_module(netconf_main)
 
 if __name__ == "__main__":
-    get_device_info()
+    netconf_main.main()
