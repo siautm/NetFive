@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir \
     paramiko \
     psutil \
     tabulate \
+    ansible \
     xmltodict
 
 # Install Ansible Cisco networking collections (Member B)
