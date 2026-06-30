@@ -1,0 +1,5 @@
+# Configure login banner
+- name: Configure login banner
+  cisco.ios.ios_banner:
+    banner: login
+    text: Unauthorized access is prohibited!
