@@ -15,20 +15,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python packages required for NETCONF (Member A) and system utilities
+# Install all Python packages required for the team (Members A, B, and C)
 RUN pip install --no-cache-dir \
     ncclient \
     paramiko \
-    psutil
+    psutil \
+    ansible \
+    tabulate
 
-# Install Ansible (Member B)
-RUN pip install --no-cache-dir ansible
-
-# Install tabulate (Member C)
-RUN pip install --no-cache-dir ncclient paramiko psutil ansible tabulate
+# Install Ansible Cisco networking collections (Member B)
+RUN ansible-galaxy collection install cisco.ios ansible.netcommon
 
 # Set up the working directory inside the container
 WORKDIR /app
 
-# (Optional placeholder) Command to keep container running for development
+# Command to keep container running for development/execution
 CMD ["tail", "-f", "/dev/null"]
