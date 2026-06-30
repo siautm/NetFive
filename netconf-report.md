@@ -1,4 +1,3 @@
-
 # NETCONF Module Testing Report
 
 ---
@@ -9,10 +8,10 @@ The NETCONF module is designed to automate network configuration and information
 
 The main objective of this module is to implement network automation tasks including:
 
-* Establishing NETCONF connection to Cisco IOS XE device
-* Retrieving device information using NETCONF
-* Configuring IP addresses via NETCONF
-* Configuring static routes via NETCONF
+- Establishing NETCONF connection to Cisco IOS XE device
+- Retrieving device information using NETCONF
+- Configuring IP addresses via NETCONF
+- Configuring static routes via NETCONF
 
 This module aims to demonstrate programmatic network management and configuration using YANG models and NETCONF operations.
 
@@ -20,71 +19,86 @@ This module aims to demonstrate programmatic network management and configuratio
 
 # 2. Current Implementation
 
-As of 27 June 2026, the NETCONF module has been partially implemented and tested against a Cisco Catalyst 8000 (Cat8kv) device via the Cisco DevNet Always-On Sandbox.
+As of 22 June 2026, the NETCONF module was implemented with `netconf/main.py` and `requirements.txt`.
 
-The current implementation successfully establishes a NETCONF session and verifies device connectivity. However, configuration-related operations and certain YANG model queries are not fully supported or have not yet been implemented.
+As of 30 June 2026, final validation was performed against a Cisco CSR1000v router (IOS-XE) deployed in GNS3, accessed from the labvm Linux environment on port 830.
 
 ### Description
 
 The implementation includes Python scripts using the `ncclient` library to perform NETCONF operations.
 
-The current script performs:
+The script supports the following subcommands:
 
-* Establishing NETCONF connection using `manager.connect()`
-* Retrieving device configuration using `get_config()` / `get()`
-* Attempting to filter system information using `ietf-system` YANG model
+- `get-info` — retrieve system and interface information
+- `set-ip` — configure interface IP address
+- `set-route` — configure static route
+
+Configuration operations use **Cisco-IOS-XE-native** YANG models with `device_params={"name": "iosxe"}` for CSR1000v compatibility.
+
+### Test Environment
+
+| Item | Value |
+|------|-------|
+| Target Device | Cisco CSR1000v (GNS3) |
+| Device IP | 192.168.56.102 |
+| NETCONF Port | 830 |
+| Interface | GigabitEthernet1 |
+| Test Host | labvm (Linux) |
+
+### Test Commands
+
+```bash
+python3 netconf/main.py --host 192.168.56.102 --username cisco --password 'cisco123!' get-info
+
+python3 netconf/main.py --host 192.168.56.102 --username cisco --password 'cisco123!' \
+  set-ip --interface GigabitEthernet1 --ip 192.168.56.200 --mask 255.255.255.0
+
+python3 netconf/main.py --host 192.168.56.102 --username cisco --password 'cisco123!' \
+  set-route --destination 10.10.10.0 --mask 255.255.255.0 --next-hop 192.168.56.1
+```
 
 ---
 
 # 3. Requirement Mapping
 
-| Requirement                        | Description                                 | Status     |
+| Requirement | Description | Status |
 | ---------------------------------- | ------------------------------------------- | ---------- |
-| Setup NETCONF Connection           | Establish connection to Cisco IOS XE device | ✅ Done     |
-| Retrieve Device Information        | Get hostname and basic system information   | ⚠️ Partial |
-| Configure IP Address via NETCONF   | Automate interface IP configuration         | ❌ Not Done |
-| Configure Static Route via NETCONF | Automate static routing configuration       | ❌ Not Done |
+| Setup NETCONF Connection | Establish connection to Cisco IOS XE device | ✅ Done |
+| Retrieve Device Information | Get hostname and system information | ✅ Done |
+| Configure IP Address via NETCONF | Automate interface IP configuration | ✅ Done |
+| Configure Static Route via NETCONF | Automate static routing configuration | ✅ Done |
 
 ---
 
 # 4. Test Cases
 
-| Test ID        | Test Description                          | Expected Result                         | Status     |
+| Test ID | Test Description | Expected Result | Status |
 | -------------- | ----------------------------------------- | --------------------------------------- | ---------- |
-| TC-NETCONF-001 | Establish NETCONF connection              | Successful session established          | PASS       |
-| TC-NETCONF-002 | Retrieve device hostname                  | Hostname returned via NETCONF           | PASS       |
-| TC-NETCONF-003 | Retrieve system information (ietf-system) | System data returned                    | FAIL       |
-| TC-NETCONF-004 | Configure IP address via NETCONF          | Interface IP configured                 | NOT TESTED |
-| TC-NETCONF-005 | Configure static route via NETCONF        | Static route installed in routing table | NOT TESTED |
+| TC-NETCONF-001 | Establish NETCONF connection | Successful session established | PASS |
+| TC-NETCONF-002 | Port 830 reachable | TCP connection succeeds | PASS |
+| TC-NETCONF-003 | Retrieve device information (`get-info`) | Device data returned | PASS |
+| TC-NETCONF-004 | Configure IP address via NETCONF | Interface IP configured | PASS |
+| TC-NETCONF-005 | Configure static route via NETCONF | Static route in routing table | PASS |
+
+### Verification (on Router)
+
+```cisco
+show ip interface brief
+show ip route static
+show netconf-yang sessions
+```
 
 ---
 
 # 5. Pending Items
 
-Final integration testing with the project Docker-based network environment is pending.
-
-The current validation was performed using the Cisco DevNet Always-On Sandbox (Cat8kv) as a temporary testing platform to verify NETCONF connectivity and basic data retrieval.
-
-Configuration-related features (IP address assignment and static route configuration) have not yet been tested due to limited implementation scope and potential device-specific YANG model constraints.
-
-Once the Docker-based router environment is fully deployed by the Docker Integration module, full end-to-end testing will be conducted to validate configuration capabilities and ensure compatibility across all NETCONF operations.
-
-Test results and documentation will be updated after final integration testing.
+- Merge `feature/netconf` into `main` after final team review.
+- Optional: run NETCONF scripts from inside the Docker `automation-runner` container for full integration demo.
 
 ---
 
 # 6. Tester Remarks
 
-The NETCONF module has been successfully verified for connectivity and basic data retrieval using a Cisco Catalyst 8000 (Cat8kv) device on the Cisco DevNet Always-On Sandbox.
+The NETCONF module has been successfully validated on a Cisco CSR1000v router in the GNS3 lab environment. NETCONF sessions were established on port 830, and all three automation features — device information retrieval, IP address configuration, and static route configuration — were verified.
 
-The NETCONF session was successfully established using Python ncclient, confirming that authentication and transport layers are functioning correctly.
-
-However, only partial functionality has been validated. The system information retrieval using `ietf-system` filtering was not fully successful due to device-specific YANG model limitations or unsupported filter structures.
-
-Configuration tasks such as IP address assignment and static route configuration have not yet been implemented or tested.
-
-Final validation will be performed once the Docker-based network environment is available through the Docker Integration module.
-
----
-
-
+The module meets all assignment requirements for NETCONF-based network automation. The module is considered **PASS and ready for merge**.
