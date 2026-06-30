@@ -24,6 +24,9 @@ RUN pip install --no-cache-dir \
 # Install Ansible (Member B)
 RUN pip install --no-cache-dir ansible
 
+# Install tabulate (Member C)
+RUN pip install --no-cache-dir ncclient paramiko psutil ansible tabulate
+
 # Set up the working directory inside the container
 WORKDIR /app
 
