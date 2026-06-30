@@ -20,8 +20,8 @@ RUN pip install --no-cache-dir \
     ncclient \
     paramiko \
     psutil \
-    ansible \
-    tabulate
+    tabulate \
+    xmltodict
 
 # Install Ansible Cisco networking collections (Member B)
 RUN ansible-galaxy collection install cisco.ios ansible.netcommon
