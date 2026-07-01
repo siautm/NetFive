@@ -1,8 +1,0 @@
----
-- name: Mock Ansible Automation Test
-  hosts: localhost
-  gather_facts: no
-  tasks:
-    - name: Print a test validation message
-      ansible.builtin.debug:
-        msg: "Hello from inside the Docker container! Ansible is working."
