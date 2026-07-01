@@ -1,135 +1,46 @@
-# NetFive
-# Network Automation Project
-
-## Overview
-
-This project is developed for the SECR3253 Network Programming Group Assignment. The objective is to build a simple network automation solution using Docker, Ansible, and NETCONF technologies. The project also includes Linux system information collection and reporting.
-
-The automation solution is designed to perform common network configuration tasks and retrieve system information automatically, reducing the need for manual configuration.
+# NetFive — Testing & Documentation Index
 
 ---
 
-## Project Objectives
+# 1. Overview
 
-### Network Device Automation
+This folder contains the testing and documentation records for the **NetFive** SECR3253 Network Programming Group Assignment.
 
-The project will automate the following tasks:
-
-* Configure IP address
-* Configure static route
-* Create user account
-* Configure banner message
-* Configure interface description
-* Retrieve device information
-
-### Linux System Information Collection
-
-The project will automatically collect and display:
-
-* Hostname
-* Current date and time
-* CPU information
-* Memory usage
-* Disk usage
-* Logged-in users
-* Top 5 running processes by CPU usage
+All modules have been tested and validated. Individual feature branches are ready for merge into `main`.
 
 ---
 
-## Proposed Architecture
+# 2. Testing Reports
 
-Docker Container
-│
-├── Ansible Module
-│   ├── User Account Configuration
-│   ├── Banner Configuration
-│   └── Interface Description Configuration
-│
-├── NETCONF Module
-│   ├── IP Address Configuration
-│   ├── Static Route Configuration
-│   └── Device Information Retrieval
-│
-└── Linux Monitoring Module
-└── System Information Collection
+| Module | Report | Branch | Status |
+|--------|--------|--------|--------|
+| Linux System Info | [system-script-report.md](system-script-report.md) | `feature/system-script` | PASS |
+| Ansible Automation | [ansible-report.md](ansible-report.md) | `feature/ansible` | PASS |
+| NETCONF Automation | [netconf-report.md](netconf-report.md) | `feature/netconf` | PASS |
+| Docker Integration | [docker-report.md](docker-report.md) | `feature/docker` | PASS |
 
 ---
 
-## Team Responsibilities
+# 3. Test Environment
 
-### Member A(Aaron Tan Yoong Thzen) – NETCONF Configuration
-
-Responsibilities:
-
-* Configure IP address
-* Configure static route
-* Retrieve device information
-* Develop NETCONF automation scripts
-
-### Member B(Leo Min Xue) – Ansible Automation
-
-Responsibilities:
-
-* Configure user account
-* Configure banner message
-* Configure interface description
-* Develop Ansible playbooks
-
-### Member C(Melody Lui Ruo Ning) – Linux Monitoring
-
-Responsibilities:
-
-* Collect Linux system information
-* Display system status
-* Develop monitoring scripts
-
-### Member D(Yeo Wern Min) – Docker Integration
-
-Responsibilities:
-
-* Create Docker environment
-* Configure Docker Compose
-* Integrate all project modules
-* Manage project deployment environment
-
-### Member E(Sia Jun Yi) – Testing & Documentation
-
-Responsibilities:
-
-* Prepare project documentation
-* Maintain README and project records
-* Perform testing and validation
-* Record results and screenshots
+| Component | Details |
+|-----------|---------|
+| Host OS | labvm (Ubuntu Linux) |
+| Docker | `automation-runner` container |
+| Network Device | Cisco CSR1000v (GNS3) |
+| Device IP | 192.168.56.102 |
+| Tester | Sia Jun Yi (Member E) |
+| Test Date | 30 June 2026 |
 
 ---
 
-## Repository Structure
+# 4. Pending Items
 
-project/
-
-├── ansible/
-
-├── netconf/
-
-├── docs/
-
-├── docker/
-
-├── system-script/
-
-└── README.md
+- Merge all feature branches into `main`.
+- Submit repository URL and personal reflection report (deadline: 6 July 2026, 9:00 AM).
 
 ---
 
-## Project Status
+# 5. Tester Remarks
 
-Current Phase:
-
-* Project planning and task allocation
-
-Next Steps:
-
-* Set up development environment
-* Develop individual modules
-* Perform integration testing
-* Complete final documentation
+All four project modules have been tested and meet the assignment requirements. Documentation and screenshots are recorded in the individual testing reports above. The project is ready for final integration and submission.
