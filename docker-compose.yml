@@ -1,0 +1,8 @@
+services:
+  automation-runner:
+    build: .
+    container_name: network_automation_container
+    volumes:
+      - .:/app
+    network_mode: "host" # Allows container to easily talk to local network devices
+    restart: always
